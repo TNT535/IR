@@ -1,0 +1,2 @@
+A vending machine with different snacks of soda and candy.
+Candies, snacks, and sodas in a vending machine.

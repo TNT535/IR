@@ -1,0 +1,1 @@
+A satellite map view of an area with roads, residences, and business names.
