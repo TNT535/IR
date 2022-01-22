@@ -6,6 +6,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from scipy import sparse
 
 
+nltk.download('punkt')
+
+
 def get_tokenized_list(doc_text):
     tokens = nltk.word_tokenize(doc_text)
     return tokens
