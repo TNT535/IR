@@ -56,7 +56,7 @@ def Read_Content(the_input):
     indices = Run_Model(the_input)
     for each_index in indices:
         path = os.getcwd()
-        path = path + '\\data\\' + file_names[each_index]
+        path = path + '/data/' + file_names[each_index]
         file = open(path, "r")
         content_in_file = file.read()
         all_content[file_names[each_index]] = content_in_file
