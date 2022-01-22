@@ -47,7 +47,7 @@ def Run_Model(input_text):
     query_vector = tf_idf.transform([cleaned_input])
     doc_vectors = sparse.load_npz("doc_vector.npz")
     cosineSimilarities = cosine_similarity(doc_vectors, query_vector).flatten()
-    related_docs_indices = cosineSimilarities.argsort()[:-10:-1]
+    related_docs_indices = cosineSimilarities.argsort()[:-21:-1]
     return related_docs_indices
 
 
