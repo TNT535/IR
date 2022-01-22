@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from scipy import sparse
 
 
-nltk.download('all')
+nltk.download('stopwords')
 
 
 def get_tokenized_list(doc_text):
