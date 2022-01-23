@@ -10,12 +10,13 @@ if user_input == '':
 
 if user_input != 'Từ khoá' and user_input != '':
     result = Read_Content(user_input)
+    st.success("Đã chạy model xong!")
     pos = 0
     index = 0
     for item in result.items():
         with st.container():
-            title = item[0]
-            st.subheader(title)
+            title = f"### Tên tập tin: {item[0]}"
+            st.markdown(title)
             st.text_area('', item[1], key=index)
             index += 1
 
