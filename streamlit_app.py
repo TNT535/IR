@@ -18,7 +18,6 @@ if user_input != 'Từ khoá' and user_input != '':
             title = f"### Tên tập tin: {item[0]}"
             st.markdown(title)
             text = item[1].decode('utf-16')
-            # print(type(text))
             st.text_area('', text, height=444, key=index)
             index += 1
 
