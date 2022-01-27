@@ -7,8 +7,8 @@ from scipy import sparse
 from underthesea import word_tokenize
 
 
-# nltk.download('punkt')
-# nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stopwords')
 
 with open('vietnamese-stopwords-dash.txt', mode='r', encoding='utf-8') as f:
     stop_words = set(f.read().split())
