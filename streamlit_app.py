@@ -1,6 +1,12 @@
 import streamlit as st
 from helper import *
 
+
+def token_corpus(text_input):
+    tokens = word_tokenize(text_input)
+    return tokens
+
+
 st.set_page_config(page_title='IR System', page_icon=':mag')
 st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt")
 user_input = st.sidebar.text_input('Nhập từ khoá muốn tìm kiếm', "Từ khoá")
