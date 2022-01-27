@@ -7,8 +7,8 @@ from scipy import sparse
 from underthesea import word_tokenize
 
 
-nltk.download('punkt')
-nltk.download('stopwords')
+# nltk.download('punkt')
+# nltk.download('stopwords')
 
 with open('vietnamese-stopwords-dash.txt', mode='r', encoding='utf-8') as f:
     stop_words = set(f.read().split())
@@ -34,6 +34,11 @@ def remove_stopwords(doc_text):
         if words not in stop_words_en:
             cleaned_text.append(words)
     return cleaned_text
+
+
+def token_corpus(text):
+    tokens = word_tokenize(text)
+    return tokens
 
 
 def get_tokenized_list_vi(doc_text):
@@ -73,7 +78,7 @@ def Read_Content(the_input):
     for each_index in indices:
         path = os.getcwd()
         path = path + '/mini_news_dataset/news_dataset/' + file_names[each_index]
-        file = open(path, "r")
+        file = open(path, "rb")
         content_in_file = file.read()
         all_content[file_names[each_index]] = content_in_file
     return all_content
