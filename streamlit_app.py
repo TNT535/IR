@@ -14,7 +14,7 @@ clicked = st.sidebar.button('Search')
 if user_input == '':
     st.sidebar.error("Hãy nhập từ khoá cần tìm kiếm")
 
-if user_input != 'Từ khoá' and user_input != '':
+if user_input != 'Từ khoá' and user_input != '' or clicked:
     result = Read_Content(user_input)
     st.success("Đã chạy model xong!")
     pos = 0
