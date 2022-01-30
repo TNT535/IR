@@ -8,8 +8,8 @@ def token_corpus(text_input):
     return tokens
 
 
-flag = True
-evaluate = False
+flag = False
+expand_query = False
 
 st.set_page_config(page_title='IR System', page_icon=':mag')
 st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt :newspaper:")
@@ -17,30 +17,29 @@ st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt :newspaper:")
 st.sidebar.header(":desktop_computer: Tìm kiếm")
 user_input = st.sidebar.text_input('Nhập từ khoá muốn tìm kiếm', "Từ khoá", key=1)
 clicked = st.sidebar.button('Search')
-st.sidebar.info("Xoá từ khoá tìm kiếm trong khung :point_up_2: trước khi lựa chọn từ khoá có sẵn")
 
-st.sidebar.write("Hoặc")
-arr = ['Chọn', 'Huế', 'Đà Nẵng', 'query_3', 'query_4', 'query_5',
-       'query_6', 'query_7', 'query_8', 'query_9', 'query_10']
-option = st.sidebar.selectbox(
-    'Chọn những từ khoá đã được chú thích', options=arr)
+keyword_searched = {}
 
-
-if (user_input == 'Từ khoá' or user_input == '') and option != 'Chọn':
-    user_input = option
-    evaluate = True
-elif user_input != 'Từ khoá' and user_input != '' or clicked:
-    pass
-else:
+if user_input == 'Từ khoá' or user_input == '':
     st.sidebar.error(":x: Hãy nhập từ khoá cần tìm kiếm")
-    flag = False
+else:
+    flag = True
 
-if user_input in arr:
-    evaluate = True
+if clicked:
+    flag = True
+
+if user_input in st.session_state:  # expand here
+    expand_query = True
+
+if expand_query:
+    pass
+    # user_input = Query_Expansion(user_input)   # And a list of result from before
 
 start_time = time.time()
+content_to_expand = []
 if flag:
-    result = Read_Content(user_input)
+    with st.spinner("Xin vui lòng chờ một chút..."):
+        result = Read_Content(user_input)
     st.success("Đã chạy model xong! :tada:")
     end_time = time.time()
     st.write(":stopwatch: Top 20 kết quả trả về trong ", round(end_time - start_time, 4), "s")
@@ -51,11 +50,22 @@ if flag:
             title = f"### :page_facing_up: Tên tập tin: {item[0]}"
             st.markdown(title)
             text = item[1].decode('utf-16')
+            content_to_expand.append(Clean_Data(text))
             st.text_area('', text, height=444, key=index)
             index += 1
+with st.sidebar.expander("Kết quả đánh giá mô hình"):
+    st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
+    st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
+    st.table(table)
+if user_input not in st.session_state:
+    st.session_state[user_input] = content_to_expand
+else:
+    a = Update_Query(user_input, st.session_state['bắt tạm giam'])
+    print(a)
 
-if evaluate:
-    st.sidebar.write(":arrow_right: Độ đo MAP của hệ thống đánh giá dựa trên 10 từ khoá trên ~", 123)
+
+
+
 
 
 
