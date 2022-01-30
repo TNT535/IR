@@ -37,7 +37,7 @@ else:
 
 if user_input in arr:
     evaluate = True
-    
+
 start_time = time.time()
 if flag:
     result = Read_Content(user_input)

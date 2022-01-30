@@ -84,11 +84,11 @@ def Read_Content(the_input):
     return all_content
 
 
-def Evaluate_System(queries):
+def Evaluate_System(queries):  # ['đường hoa', 'bắt tạm giam',....]
     count = 0
     average_precisions = 0
     for each_query in queries:
-        relevant_indices = Run_Model(each_query)
+        relevant_indices = Run_Model(each_query)  # [1 3 9 ...]
         path_of_ground_truth = os.getcwd() + '/ground_truth/' + 'gt_' + str(count) + '.txt'
         ground_truth_files = open(path_of_ground_truth, "r")
         ground_truth_content = ground_truth_files.read()
