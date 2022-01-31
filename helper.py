@@ -118,21 +118,20 @@ def Evaluate_System(queries):
     return precisions_list
 
 
-def Create_Table():
-    # Prepare for evaluating model
-    query = open('ground_truth/list_query.txt', "r", encoding='utf-8')
-    content = query.read()
-    arr_queries = content.split('\n')
-    arr_queries = [text for text in arr_queries if text != '']
-
-    # Get the result and display it
-    precisions = Evaluate_System(arr_queries)
-    precisions = [round(precision, 2) for precision in precisions]
-    table = {'Từ khoá': arr_queries,
-             'Precision': precisions}
-    table = pd.DataFrame(data=table)
-    table = table.set_index(pd.Index([i for i in range(1, 11)]))
-    return table
-
-
 file_names = np.load("file_names_vietnamese_full.npy")
+
+# Prepare for evaluating model
+query = open('ground_truth/list_query.txt', "r", encoding='utf-8')
+content = query.read()
+arr_queries = content.split('\n')
+arr_queries = [text for text in arr_queries if text != '']
+
+# Get the result and display it
+precisions = Evaluate_System(arr_queries)
+table = {'Từ khoá': arr_queries,
+         'Precision': precisions
+         }
+table = pd.DataFrame(data=table)
+table = table.set_index(pd.Index([i for i in range(1, 11)]))
+
+

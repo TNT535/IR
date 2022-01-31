@@ -1,5 +1,6 @@
 import streamlit as st
 from helper import *
+import helper
 import time
 
 
@@ -12,15 +13,17 @@ flag = False
 
 st.set_page_config(page_title='IR System', page_icon=':mag')
 st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt :newspaper:")
+st.session_state['first'] = 1
 
 st.sidebar.header(":desktop_computer: Tìm kiếm")
 user_input = st.sidebar.text_input('Nhập từ khoá muốn tìm kiếm', "Từ khoá", key=1)
 clicked = st.sidebar.button('Search')
 
-if user_input == 'Từ khoá' or user_input == '':
+if user_input == 'Từ khoá' or user_input == '' and st.session_state['first'] != 1:
     st.sidebar.error(":x: Hãy nhập từ khoá cần tìm kiếm")
 else:
     flag = True
+    st.session_state['first'] = 2
 
 if clicked:
     flag = True
@@ -51,16 +54,16 @@ if flag:
             st.text_area('', text, height=444, key=index)
             index += 1
 
-table = Create_Table()
-st.session_state['table'] = table
 
 with st.sidebar.expander("Kết quả đánh giá mô hình"):
     st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
     st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
-    st.table(st.session_state['table'])
+    st.table(helper.table.round({'Precision': 2}))
+    st.write(":pencil: Precision trung bình ~", sum(helper.precisions) / 10)
 
 if user_input not in st.session_state:
     st.session_state[user_input] = content_to_expand
+
 
 
 
