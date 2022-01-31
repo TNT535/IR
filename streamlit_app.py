@@ -23,13 +23,12 @@ if user_input == 'Từ khoá' or user_input == '':
     st.sidebar.error(":x: Hãy nhập từ khoá cần tìm kiếm")
 else:
     flag = True
-    st.session_state['first'] = 2
 
 if clicked:
     flag = True
 
 
-if user_input in st.session_state:
+if user_input in st.session_state and user_input != 'Từ khoá' and user_input != '':
     new_one = Update_Query(user_input, st.session_state[user_input])
     new_one = new_one.replace("_", ' ')
     st.sidebar.write(":point_right: Sử dụng query expansion từ lần search trước:", new_one)
@@ -53,16 +52,25 @@ if flag:
             content_to_expand.append(Clean_Data(text))
             st.text_area('', text, height=444, key=index)
             index += 1
+            
+    with st.sidebar.expander("Kết quả đánh giá mô hình"):
+        st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
+        st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
+        st.table(helper.table.round({'Precision': 2}))
+        st.write(":pencil: Precision trung bình ~", sum(helper.precisions) / 10)
+
+    if user_input not in st.session_state:
+        st.session_state[user_input] = content_to_expand
 
 
-with st.sidebar.expander("Kết quả đánh giá mô hình"):
-    st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
-    st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
-    st.table(helper.table.round({'Precision': 2}))
-    st.write(":pencil: Precision trung bình ~", sum(helper.precisions) / 10)
-
-if user_input not in st.session_state:
-    st.session_state[user_input] = content_to_expand
+# with st.sidebar.expander("Kết quả đánh giá mô hình"):
+#     st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
+#     st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
+#     st.table(helper.table.round({'Precision': 2}))
+#     st.write(":pencil: Precision trung bình ~", sum(helper.precisions) / 10)
+#
+# if user_input not in st.session_state:
+#     st.session_state[user_input] = content_to_expand
 
 
 
