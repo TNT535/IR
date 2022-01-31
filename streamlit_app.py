@@ -19,9 +19,9 @@ st.sidebar.header(":desktop_computer: Tìm kiếm")
 user_input = st.sidebar.text_input('Nhập từ khoá muốn tìm kiếm', "Từ khoá", key=1)
 clicked = st.sidebar.button('Search')
 
-if user_input == '':
+if user_input == 'Từ khoá' or user_input == '':
     st.sidebar.error(":x: Hãy nhập từ khoá cần tìm kiếm")
-elif user_input != 'Từ khoá':
+else:
     flag = True
     st.session_state['first'] = 2
 
