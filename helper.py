@@ -61,16 +61,13 @@ def Read_Content(the_input):
 
 def Query_Expansion(token, old_query, transformer, matrix_normalized, range_qe=1):
     token = token.lower()
-    print(transformer.get_feature_names_out())
-    if np.where(transformer.get_feature_names_out() == token)[0].size == 0:
-        print(2222)
+    if np.where(transformer == token)[0].size == 0:
         return []
-    idx = np.where(transformer.get_feature_names_out() == token)[0][0]
+    idx = np.where(transformer == token)[0][0]
     list_expansion = []
     for pos in matrix_normalized[idx].argsort()[:-21:-1]:
-        if transformer.get_feature_names_out()[pos] not in old_query:
-            list_expansion.append(transformer.get_feature_names_out()[pos])
-    print(111, list_expansion)
+        if transformer[pos] not in old_query:
+            list_expansion.append(transformer[pos])
     return list_expansion[0:range_qe]
 
 
@@ -87,10 +84,11 @@ def Update_Query(user_input, retrieved_content):
         for v in range(col):
             s_nor[u][v] = s[u][v] / (s[u][u] + s[v][v] - s[u][v])
     final_query = []
+    get_feature_names_out = vectorizer_qe.get_feature_names()
+    get_feature_names_out = np.array(get_feature_names_out)
     for qu in user_input:
         final_query.append(qu)
-        final_query = final_query + Query_Expansion(qu, user_input + final_query, vectorizer_qe, s_nor, range_qe=1)
-    print(final_query)
+        final_query = final_query + Query_Expansion(qu, user_input + final_query, get_feature_names_out, s_nor, range_qe=1)
     updated = ' '.join(final_query)
     return updated
 

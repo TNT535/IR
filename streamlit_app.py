@@ -32,8 +32,10 @@ if user_input in st.session_state:  # expand here
     expand_query = True
 
 if expand_query:
-    pass
-    # user_input = Query_Expansion(user_input)   # And a list of result from before
+    new_one = Update_Query(user_input, st.session_state[user_input])
+    new_one = new_one.replace("_", ' ')
+    st.sidebar.write(":point_right: Sử dụng query expansion từ lần search trước:", new_one)
+    user_input = new_one  # And a list of result from before
 
 start_time = time.time()
 content_to_expand = []
@@ -53,15 +55,14 @@ if flag:
             content_to_expand.append(Clean_Data(text))
             st.text_area('', text, height=444, key=index)
             index += 1
+
 with st.sidebar.expander("Kết quả đánh giá mô hình"):
     st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
     st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
     st.table(table)
+
 if user_input not in st.session_state:
     st.session_state[user_input] = content_to_expand
-else:
-    a = Update_Query(user_input, st.session_state['bắt tạm giam'])
-    print(a)
 
 
 
