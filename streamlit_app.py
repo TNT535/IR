@@ -9,7 +9,6 @@ def token_corpus(text_input):
 
 
 flag = False
-expand_query = False
 
 st.set_page_config(page_title='IR System', page_icon=':mag')
 st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt :newspaper:")
@@ -17,8 +16,6 @@ st.title("Hệ thống tìm kiếm tin tức bằng tiếng Việt :newspaper:")
 st.sidebar.header(":desktop_computer: Tìm kiếm")
 user_input = st.sidebar.text_input('Nhập từ khoá muốn tìm kiếm', "Từ khoá", key=1)
 clicked = st.sidebar.button('Search')
-
-keyword_searched = {}
 
 if user_input == 'Từ khoá' or user_input == '':
     st.sidebar.error(":x: Hãy nhập từ khoá cần tìm kiếm")
@@ -28,10 +25,8 @@ else:
 if clicked:
     flag = True
 
-if user_input in st.session_state:  # expand here
-    expand_query = True
 
-if expand_query:
+if user_input in st.session_state:
     new_one = Update_Query(user_input, st.session_state[user_input])
     new_one = new_one.replace("_", ' ')
     st.sidebar.write(":point_right: Sử dụng query expansion từ lần search trước:", new_one)
@@ -56,12 +51,13 @@ if flag:
             st.text_area('', text, height=444, key=index)
             index += 1
 
+table = Create_Table()
+st.session_state['table'] = table
 
 with st.sidebar.expander("Kết quả đánh giá mô hình"):
     st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
     st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
-    table = Create_Table()
-    st.table(table)
+    st.table(st.session_state['table'])
 
 if user_input not in st.session_state:
     st.session_state[user_input] = content_to_expand
