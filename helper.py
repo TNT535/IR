@@ -39,7 +39,7 @@ def Clean_Data(input_text):
 
 def Run_Model(input_text):
     cleaned_input = Clean_Data(input_text)
-    tf_idf = pickle.load(open('tf_idf_vietnamese_ful.sav', 'rb'))
+    tf_idf = pickle.load(open('tf_idf_vietnamese_full.sav', 'rb'))
     query_vector = tf_idf.transform([cleaned_input])
     doc_vectors = sparse.load_npz("doc_vector_vietnamese_full.npz")
     cosineSimilarities = cosine_similarity(doc_vectors, query_vector).flatten()
