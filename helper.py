@@ -9,8 +9,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 
 
-# nltk.download('punkt')
-# nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('stopwords')
 
 with open('vietnamese-stopwords-dash.txt', mode='r', encoding='utf-8') as f:
     stop_words = set(f.read().split())
