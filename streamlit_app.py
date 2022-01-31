@@ -56,9 +56,11 @@ if flag:
             st.text_area('', text, height=444, key=index)
             index += 1
 
+
 with st.sidebar.expander("Kết quả đánh giá mô hình"):
     st.write(":pushpin: Mô hình được đánh giá dựa trên độ đo Precision")
     st.write(":pushpin: Với 10 câu query nhóm tự gán nhãn")
+    table = Create_Table()
     st.table(table)
 
 if user_input not in st.session_state:
