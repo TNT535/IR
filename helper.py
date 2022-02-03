@@ -10,7 +10,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 
 nltk.download('punkt')
-nltk.download('stopwords')
 
 with open('vietnamese-stopwords-dash.txt', mode='r', encoding='utf-8') as f:
     stop_words = set(f.read().split())
@@ -81,6 +80,8 @@ def Update_Query(user_input, retrieved_content):
     m = X_qe.toarray().T
     s = m @ m.T
     s_nor = np.zeros(s.shape)
+    # unnomalize
+    # s_nor = s.copy()
     row, col = s.shape
     for u in range(row):
         for v in range(col):
