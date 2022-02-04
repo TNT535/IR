@@ -1,2 +1,0 @@
-A control small panel for a sound system.
-An audio mixer with a lot of inputs laying on white sheets.

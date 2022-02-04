@@ -1,2 +1,0 @@
-The package contains information about the enclosed medication
-top corner of a pill bottle with a window in the background.

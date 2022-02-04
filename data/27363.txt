@@ -1,1 +1,0 @@
-Part of a digital display with white buttons for adjust the properties of it.
